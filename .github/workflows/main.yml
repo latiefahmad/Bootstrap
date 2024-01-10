@@ -39,7 +39,3 @@ jobs:
           body: These are automatically updated builds of the latest commit.
           artifacts: "./packages/*"
           tag: release-${{ github.run_id }}
-
-          
-
-      
