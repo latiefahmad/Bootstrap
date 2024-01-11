@@ -36,7 +36,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           name: Rolling Release
-          version: "./MARKETING_VERSION/*"
+          version: ${{ MARKETING_VERSION }}
           body: These are automatically updated builds of the latest commit.
           artifacts: "./packages/*"
           tag: release-${{ github.run_id }}
