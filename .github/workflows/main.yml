@@ -31,11 +31,21 @@ jobs:
 
       - name: Make Bootstrap Package
         run: make package
+      
+      - name: Extract Version from Bootstrap.tipa
+        id: extract_version
+        run: |
+          mkdir extracted
+          unzip -q packages/Bootstrap.tipa -d extracted
+          version=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" extracted/Payload/Bootstrap.app/Info.plist)
+          echo "Version extracted: $version"
+          echo "RELEASE_VERSION=$version" >> $GITHUB_ENV
+          rm -rf extracted  # Remove the extracted directory
 
       - name: Create new release
         uses: ncipollo/release-action@v1
         with:
-          name: Rolling Release
+          name: "Bootstrap_${{ env.RELEASE_VERSION }}"
           body: These are automatically updated builds of the latest commit.
           artifacts: "./packages/*"
           tag: release-${{ github.run_id }}
