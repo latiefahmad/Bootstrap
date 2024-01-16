@@ -29,6 +29,11 @@ jobs:
       - name: Setup Environment
         run: echo "THEOS=~/theos" >> $GITHUB_ENV
 
+      - name: Print env
+        run: |
+          echo ${{ env.VERSION }}
+          echo ${{ env.msT }}
+
       - name: Make Bootstrap Package
         run: make package
 
@@ -36,6 +41,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           name: Rolling Release
+          tag_name: ${{ env.msT }}
           body: These are automatically updated builds of the latest commit.
           artifacts: "./packages/*"
           tag: release-${{ github.run_id }}
